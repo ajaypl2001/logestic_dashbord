@@ -7,19 +7,19 @@
             <div class="card">
                <div class="card-header">
                   @if (!empty($Customer->id))
-                     <h4 class="card-title d-flex align-items-center gap-1" id="hidden_column"> Update Load Customer </h4>
+                  <h4 class="card-title d-flex align-items-center gap-1" id="hidden_column"> Update Load Customer </h4>
                   @else
-                     <h4 class="card-title d-flex align-items-center gap-1" id="hidden_column"> Add Load Customer </h4>
+                  <h4 class="card-title d-flex align-items-center gap-1" id="hidden_column"> Add Load Customer </h4>
                   @endif
-                  
+
                </div>
-                         @php
-                           $isEdit = isset($Customer);
-                        @endphp
+               @php
+               $isEdit = isset($Customer);
+               @endphp
                <div class="card-body">
                   <div class="row">
                      <div class="col-lg-12">
-                        
+
                         <form action="{{ $isEdit ? route('update_customer', $Customer->id) : route('AddLoadCustomer_query') }}" id="CustomerForm" method="post">
                            @csrf
                            <div class="row">
@@ -37,7 +37,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Customer Name</label><span style="color:red;">*</span>
-                                                <input Placeholder="Customer Name" class="form-control required" id="customer_name" name="customer_name" type="text" value="{{ $isEdit ? $Customer->customer_name : '' }}" required />
+                                                <input Placeholder="Customer Name" class="form-control required" id="customer_name" name="customer_name" type="text" value="{{ $isEdit ? $Customer->customer_name : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -45,9 +45,10 @@
                                                 <div class="col-md-4 el_small_fld">
                                                    <div class="form-group mb-3">
                                                       <label class="control-label mb-1">M.C. #/F.F. #</label>
-                                                      <select class="form-control shadow-none col-12" id="mc_ff" name="mc_ff" required>
-                                                             <option value="MC" {{ ($isEdit && $Customer->mc_ff == 'MC') ? 'selected' : '' }}>MC</option>
-                                                             <option value="FF" {{ ($isEdit && $Customer->mc_ff == 'FF') ? 'selected' : '' }}>FF</option>
+                                                      <select class="form-control shadow-none col-12 required" id="mc_ff" name="mc_ff">
+                                                         <option value="">Choose Option</option>
+                                                         <option value="MC" {{ ($isEdit && $Customer->mc_ff == 'MC') ? 'selected' : '' }}>MC</option>
+                                                         <option value="FF" {{ ($isEdit && $Customer->mc_ff == 'FF') ? 'selected' : '' }}>FF</option>
                                                       </select>
                                                    </div>
                                                 </div>
@@ -62,13 +63,13 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Customer Id</label>
-                                                <input Placeholder="Customer Id" class="form-control" id="customer_id" name="customer_id" type="text" value="{{ $isEdit ? $Customer->customer_id : '' }}" required/>
+                                                <input Placeholder="Customer Id" class="form-control" id="customer_id" name="customer_id" type="text" value="{{ $isEdit ? $Customer->customer_id : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Address</label><span style="color:red;">*</span>
-                                                <input Placeholder="Address" class="form-control required" id="address" name="address" type="text" value="{{ $isEdit ? $Customer->address : '' }}" required />
+                                                <input Placeholder="Address" class="form-control required" id="address" name="address" type="text" value="{{ $isEdit ? $Customer->address : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -86,13 +87,13 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Country</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12 required" data-val="true" data-val-required="Country is required" id="strCountryID" name="country" required>
+                                                <select class="form-control shadow-none col-12 required" data-val="true" data-val-required="Country is required" id="strCountryID" name="country">
                                                    <option value="">Please Select</option>
 
-                                                   @foreach($countries as $country) 
-                                                   <option value="{{ $country->id }}" 
-                                                         {{ $isEdit && $Customer->country == $country->id ? 'selected' : '' }}>
-                                                         {{ $country->countries_name }}
+                                                   @foreach($countries as $country)
+                                                   <option value="{{ $country->countries_iso_code }}"
+                                                      {{ $isEdit && $Customer->country == $country->countries_iso_code ? 'selected' : '' }}>
+                                                      {{ $country->countries_name }}
                                                    </option>
                                                    @endforeach
 
@@ -102,7 +103,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">State</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12 required" id="strStateID" name="state" required>
+                                                <select class="form-control shadow-none col-12 required" id="strStateID" name="state">
                                                    <option value="">Please Select</option>
                                                 </select>
                                              </div>
@@ -110,25 +111,25 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">City</label><span style="color:red;">*</span>
-                                                <input Placeholder="City" class="form-control required" id="city" name="city" type="text" value="{{ $isEdit ? $Customer->city : '' }}" required/>
+                                                <input Placeholder="City" class="form-control required" id="city" name="city" type="text" value="{{ $isEdit ? $Customer->city : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Zip</label><span style="color:red;">*</span>
-                                                <input Placeholder="Zip" class="form-control" id="zip_code" name="zip_code" type="text" value="{{ $isEdit ? $Customer->zip_code : '' }}" required/>
+                                                <input Placeholder="Zip" class="form-control required" id="zip_code" name="zip_code" type="text" value="{{ $isEdit ? $Customer->zip_code : '' }}" />
                                              </div>
                                           </div>
                                           <div class="form-check-inline form-check mt-2">
                                              <div class="form-group mb-3">
                                                 <label class="form-check-label">
-                                                   <input class="form-check-input" id="ISBillingAddSameAsMailing" name="ISBillingAddSameAsMailing" type="checkbox" value="Yes" {{ ($isEdit && $Customer->ISBillingAddSameAsMailing == 'Yes') ? 'checked' : '' }}/>Same As Physical Address </label>
+                                                   <input class="form-check-input" id="ISBillingAddSameAsMailing" name="ISBillingAddSameAsMailing" type="checkbox" value="Yes" {{ ($isEdit && $Customer->ISBillingAddSameAsMailing == 'Yes') ? 'checked' : '' }} />Same As Physical Address </label>
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Billing Address</label><span style="color:red;">*</span>
-                                                <input Placeholder="Billing Address" class="form-control required" id="bill_address" name="bill_address" type="text" value="{{ $isEdit ? $Customer->bill_address : '' }}" required/>
+                                                <input Placeholder="Billing Address" class="form-control required" id="bill_address" name="bill_address" type="text" value="{{ $isEdit ? $Customer->bill_address : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -146,12 +147,12 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Billing Country</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12 required" id="strBillingCountryID" name="bill_country" required>
+                                                <select class="form-control shadow-none col-12 required" id="strBillingCountryID" name="bill_country">
                                                    <option value="">Please Select</option>
-                                                    @foreach($countries as $country) 
-                                                   <option value="{{ $country->id }}" 
-                                                         {{ $isEdit && $Customer->bill_country == $country->id ? 'selected' : '' }}>
-                                                         {{ $country->countries_name }}
+                                                   @foreach($countries as $country)
+                                                   <option value="{{ $country->countries_iso_code }}"
+                                                      {{ $isEdit && $Customer->bill_country == $country->countries_iso_code ? 'selected' : '' }}>
+                                                      {{ $country->countries_name }}
                                                    </option>
                                                    @endforeach
                                                 </select>
@@ -160,7 +161,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Billing State</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12 required" id="strBillingStateID" name="bill_state" required >
+                                                <select class="form-control shadow-none col-12 required" id="strBillingStateID" name="bill_state">
                                                    <option value="">Please Select</option>
                                                 </select>
                                              </div>
@@ -168,25 +169,25 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Billing City</label><span style="color:red;">*</span>
-                                                <input Placeholder="Billing City" class="form-control required" id="bill_city" name="bill_city" type="text" value="{{ $isEdit ? $Customer->bill_city : '' }}" required />
+                                                <input Placeholder="Billing City" class="form-control required" id="bill_city" name="bill_city" type="text" value="{{ $isEdit ? $Customer->bill_city : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Billing Zip</label><span style="color:red;">*</span>
-                                                <input Placeholder="Billing Zip" class="form-control" id="bill_zip_code" name="bill_zip_code" type="text" value="{{ $isEdit ? $Customer->bill_zip_code : '' }}" required />
+                                                <input Placeholder="Billing Zip" class="form-control required" id="bill_zip_code" name="bill_zip_code" type="text" value="{{ $isEdit ? $Customer->bill_zip_code : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Primary Contact</label><span style="color:red;">*</span>
-                                                <input Placeholder="Primary Contact" class="form-control" id="primary_contact" name="primary_contact" type="text" value="{{ $isEdit ? $Customer->primary_contact : '' }}" required />
+                                                <input Placeholder="Primary Contact" class="form-control required" id="primary_contact" name="primary_contact" type="text" value="{{ $isEdit ? $Customer->primary_contact : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Telephone</label><span style="color:red;">*</span>
-                                                <input Placeholder="XXX-XXX-XXXX" class="form-control telephone" id="telephone" name="telephone" type="text" value="{{ $isEdit ? $Customer->telephone : '' }}" required />
+                                                <input Placeholder="XXX-XXX-XXXX" class="form-control telephone required" id="telephone" name="telephone" type="text" value="{{ $isEdit ? $Customer->telephone : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -198,13 +199,13 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Email</label><span style="color:red;">*</span>
-                                                <input Placeholder="test@test.com" class="form-control" id="email" name="email" type="email" value="{{ $isEdit ? $Customer->email : '' }}" required />
+                                                <input Placeholder="test@test.com" class="form-control required" id="email" name="email" type="email" value="{{ $isEdit ? $Customer->email : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Toll Free</label>
-                                                <input Placeholder="XXX-XXX-XXXX" class="form-control telephone" id="toll_free" name="toll_free" type="text" value="{{ $isEdit ? $Customer->toll_free : '' }}" required/>
+                                                <input Placeholder="XXX-XXX-XXXX" class="form-control telephone" id="toll_free" name="toll_free" type="text" value="{{ $isEdit ? $Customer->toll_free : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -228,7 +229,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Billing Email</label>
-                                                <input Placeholder="test@test.com" class="form-control" id="bill_mail" name="bill_mail" type="text" value="{{ $isEdit ? $Customer->bill_mail : '' }}" />
+                                                <input Placeholder="test@test.com" class="form-control" id="bill_mail" name="bill_mail" type="email" value="{{ $isEdit ? $Customer->bill_mail : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -246,7 +247,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Status</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12" id="acc_sts" name="acc_sts" width="100px" required>
+                                                <select class="form-control shadow-none col-12 required" id="acc_sts" name="acc_sts" width="100px">
                                                    <option value="2" {{ $isEdit && $Customer->acc_sts == 2 ? 'selected' : '' }}>Inactive</option>
                                                    <option value="1" {{ $isEdit && $Customer->acc_sts == 1 ? 'selected' : '' }}>Active</option>
                                                 </select>
@@ -263,7 +264,7 @@
                                              <label class="control-label mb-1 el_min100">BlackListed</label>
                                              <div class="form-check-inline form-check">
                                                 <label class="form-check-label">
-                                                   <input class="form-check-input" id="black_listed" name="black_listed" vlaue="Yes" type="checkbox" {{ ($isEdit && $Customer->black_listed == 'Yes') ? 'checked' : '' }}/>Customer is blacklisted
+                                                   <input class="form-check-input" id="black_listed" name="black_listed" vlaue="Yes" type="checkbox" {{ ($isEdit && $Customer->black_listed == 'Yes') ? 'checked' : '' }} />Customer is blacklisted
                                                 </label>
                                              </div>
                                           </div>
@@ -272,11 +273,14 @@
                                                 <label class="control-label mb-1 el_min100">Corporation</label>
                                                 <div class="form-check-inline form-check">
                                                    <label class="form-check-label">
-                                                      <input class="form-check-input" id="is_broker" name="is_broker" vlaue="Yes" type="checkbox" {{ ($isEdit && $Customer->is_broker == 'Yes') ? 'checked' : '' }}/>This is Broker
+                                                      <input class="form-check-input" id="is_broker" name="is_broker" vlaue="Yes" type="checkbox" {{ ($isEdit && $Customer->is_broker == 'Yes') ? 'checked' : '' }} />This is Broker
                                                    </label>
                                                 </div>
                                              </div>
                                           </div>
+                                       </div>
+                                       <div class="form_bbtns text-end">
+                                          <button type="button" class="btn btn-primary text-white commonBtn rounded px-3 nextBtn">Next</button>
                                        </div>
                                     </div>
                                     <div class="tab-pane fade" id="tab02" role="tabpanel">
@@ -286,16 +290,16 @@
                                                 <label class="control-label mb-1">Currency Setting</label>
                                                 <select class="form-control shadow-none col-12" id="curr_setting" name="curr_setting">
                                                    <option value="">Please Select</option>
-                                                       <option value="1" {{ $isEdit && $Customer->curr_setting == 1 ? 'selected' : '' }}>American Dollars</option>
-                                                      <option value="2" {{ $isEdit && $Customer->curr_setting == 2 ? 'selected' : '' }}>Canadian Dollar</option>
-                                                      <option value="3" {{ $isEdit && $Customer->curr_setting == 3 ? 'selected' : '' }}>Euros</option>
+                                                   <option value="1" {{ $isEdit && $Customer->curr_setting == 1 ? 'selected' : '' }}>American Dollars</option>
+                                                   <option value="2" {{ $isEdit && $Customer->curr_setting == 2 ? 'selected' : '' }}>Canadian Dollar</option>
+                                                   <option value="3" {{ $isEdit && $Customer->curr_setting == 3 ? 'selected' : '' }}>Euros</option>
                                                 </select>
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Payment Terms </label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12" id="payment_terms" name="payment_terms" required>
+                                                <select class="form-control shadow-none col-12 required" id="payment_terms" name="payment_terms">
                                                    <option value="">Please Select</option>
                                                    <option value="1" {{ $isEdit && $Customer->payment_terms == 1 ? 'selected' : '' }}>.5/10 Net 30</option>
                                                    <option value="2" {{ $isEdit && $Customer->payment_terms == 2 ? 'selected' : '' }}>1.5/2 Net 30</option>
@@ -373,7 +377,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Credit Limits</label><span style="color:red;">*</span>
-                                                <input Placeholder="" class="form-control" id="credit_limit" name="credit_limit" type="text" value="{{ $isEdit ? $Customer->credit_limit : '' }}" required />
+                                                <input Placeholder="" class="form-control required" id="credit_limit" name="credit_limit" type="text" value="{{ $isEdit ? $Customer->credit_limit : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -409,7 +413,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Website URL</label>
-                                                <input Maxlength="50" Placeholder="www.abc.com" class="form-control" id="website_url" name="website_url" type="text" value="{{ $isEdit ? $Customer->website_url : '' }}" />
+                                                <input Maxlength="150" Placeholder="www.abc.com" class="form-control" id="website_url" name="website_url" type="text" value="{{ $isEdit ? $Customer->website_url : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -417,7 +421,7 @@
                                                 <label class="control-label mb-1 el_min100">Number on Invoice</label>
                                                 <div class="form-check-inline form-check">
                                                    <label class="form-check-label">
-                                                      <input class="form-check-input" data-val="true" id="show_tel_tax" name="show_tel_tax" value="Yes" type="checkbox" {{ ($isEdit && $Customer->show_tel_tax == 'Yes') ? 'checked' : '' }}/> Show tel. and Fax numbers on invoice
+                                                      <input class="form-check-input" data-val="true" id="show_tel_tax" name="show_tel_tax" value="Yes" type="checkbox" {{ ($isEdit && $Customer->show_tel_tax == 'Yes') ? 'checked' : '' }} /> Show tel. and Fax numbers on invoice
                                                    </label>
                                                 </div>
                                              </div>
@@ -427,10 +431,10 @@
                                                 <label class="control-label mb-1 el_min100">Duplicate</label>
                                                 <div class="form-check-inline form-check">
                                                    <label class="form-check-label">
-                                                      <input class="form-check-input" id="as_shipper" name="as_shipper" value="Yes" type="checkbox" {{ ($isEdit && $Customer->as_shipper == 'Yes') ? 'checked' : '' }}/>Add As Shipper
+                                                      <input class="form-check-input" id="as_shipper" name="as_shipper" value="Yes" type="checkbox" {{ ($isEdit && $Customer->as_shipper == 'Yes') ? 'checked' : '' }} />Add As Shipper
                                                    </label>
                                                    <label class="form-check-label" style="padding-left:20px;">
-                                                      <input class="form-check-input" id="as_consignee" value="Yes" name="as_consignee" type="checkbox" {{ ($isEdit && $Customer->as_consignee == 'Yes') ? 'checked' : '' }}/>Add As Consignee
+                                                      <input class="form-check-input" id="as_consignee" value="Yes" name="as_consignee" type="checkbox" {{ ($isEdit && $Customer->as_consignee == 'Yes') ? 'checked' : '' }} />Add As Consignee
                                                    </label>
                                                 </div>
                                              </div>
@@ -442,6 +446,9 @@
                                              </div>
                                           </div>
                                        </div>
+                                       <div class="form_bbtns text-end">
+                                          <button type="button" class="btn btn-primary text-white commonBtn rounded px-3 nextBtn">Next</button>
+                                       </div>
                                     </div>
                                     <div class="tab-pane fade" id="tab04" role="tabpanel">
                                        <div class="row">
@@ -450,7 +457,7 @@
                                                 <label class="control-label mb-1 el_min100">Show Miles On quote</label>
                                                 <div class="form-check-inline form-check">
                                                    <label class="form-check-label">
-                                                      <input class="form-check-input" id="show_miles_quote" name="show_miles_quote" type="checkbox" value="Yes" {{ ($isEdit && $Customer->show_miles_quote == 'Yes') ? 'checked' : '' }} required />
+                                                      <input class="form-check-input" id="show_miles_quote" name="show_miles_quote" type="checkbox" value="Yes" {{ ($isEdit && $Customer->show_miles_quote == 'Yes') ? 'checked' : '' }} />
                                                    </label>
                                                 </div>
                                              </div>
@@ -483,18 +490,18 @@
                                              </div>
                                           </div>
                                        </div>
+                                       <div class="form_bbtns text-end">
+                                          <input type="hidden" name="customer_id" value="{{ $isEdit ? $Customer->id : '' }}">
+                                          @if (!empty($Customer->id))
+                                          <button type="submit" class="btn btn-primary text-white commonBtn rounded px-3">Update</button>
+                                          @else
+                                          <button type="submit" class="btn btn-primary text-white commonBtn rounded px-3">Save</button>
+                                          @endif
+                                       </div>
                                     </div>
+
                                  </div>
 
-                                 <div class="form_bbtns text-end">
-                                    <input type="hidden" name="customer_id" value="{{ $isEdit ? $Customer->id : '' }}">
-                                     @if (!empty($Customer->id))
-                                       <button type="submit" class="btn btn-primary text-white commonBtn rounded px-3">Update</button>
-                                    @else
-                                       <button type="submit" class="btn btn-primary text-white commonBtn rounded px-3">Save</button>
-                                    @endif
-                                    
-                                 </div>
 
                                  <!-- <div class="form_bbtns text-end">
                                     <a class="btn btn-primary  text-white commonBtn rounded submit px-3" href="index.php" style="">Cancel</a>
@@ -513,94 +520,98 @@
 @include('footer')
 <script>
    var $countryDropdown = $('#strCountryID');
-    var $stateDropdown = $('#strStateID');
-    var selectedState = "{{ $isEdit ? $Customer->state : '' }}"; 
+   var $stateDropdown = $('#strStateID');
+   var selectedState = "{{ $isEdit ? $Customer->state : '' }}";
 
-    function loadStates(countryId, selectedState = '') {
-        $stateDropdown.html('<option value="">Please Select</option>');
-        if (!countryId) return;
+   function loadStates(countryId, selectedState = '') {
+      $stateDropdown.html('<option value="">Please Select</option>');
+      if (!countryId) return;
 
-        $.ajax({
-            url: "{{ route('states.get') }}",
-            type: 'GET',
-            data: { country_id: countryId },
-            dataType: 'json',
-            success: function(response) {
-                if (response.length > 0) {
-                    $.each(response, function(index, state) {
-                        var option = $('<option>', {
-                            value: state.id,
-                            text: state.name
-                        });
-                        if (state.id == selectedState) {
-                            option.prop('selected', true);
-                        }
-                        $stateDropdown.append(option);
-                    });
-                } else {
-                    $stateDropdown.append('<option value="">No states found</option>');
-                }
-            },
-            error: function() {
-                alert('Error loading states.');
+      $.ajax({
+         url: "{{ route('states.get') }}",
+         type: 'GET',
+         data: {
+            country_id: countryId
+         },
+         dataType: 'json',
+         success: function(response) {
+            if (response.length > 0) {
+               $.each(response, function(index, state) {
+                  var option = $('<option>', {
+                     value: state.id,
+                     text: state.name
+                  });
+                  if (state.id == selectedState) {
+                     option.prop('selected', true);
+                  }
+                  $stateDropdown.append(option);
+               });
+            } else {
+               $stateDropdown.append('<option value="">No states found</option>');
             }
-        });
-    }
+         },
+         error: function() {
+            alert('Error loading states.');
+         }
+      });
+   }
 
-    $countryDropdown.on('change', function() {
-        loadStates($(this).val());
-    });
+   $countryDropdown.on('change', function() {
+      loadStates($(this).val());
+   });
 
-    var initialCountry = $countryDropdown.val();
-    if (initialCountry) {
-        loadStates(initialCountry, selectedState);
-    }
+   var initialCountry = $countryDropdown.val();
+   if (initialCountry) {
+      loadStates(initialCountry, selectedState);
+   }
 
 
 
    var $countrybillDropdown = $('#strBillingCountryID');
-    var $statebillDropdown = $('#strBillingStateID');
-    var selectbilledState = "{{ $isEdit ? $Customer->bill_state : '' }}"; 
+   var $statebillDropdown = $('#strBillingStateID');
+   var selectbilledState = "{{ $isEdit ? $Customer->bill_state : '' }}";
 
-    function loadbilStates(countrybillId, selectbilledState = '') {
-        $statebillDropdown.html('<option value="">Please Select</option>');
-        if (!countrybillId) return;
+   function loadbilStates(countrybillId, selectbilledState = '') {
+      $statebillDropdown.html('<option value="">Please Select</option>');
+      if (!countrybillId) return;
 
-        $.ajax({
-            url: "{{ route('states.get') }}",
-            type: 'GET',
-            data: { bill_country_id: countrybillId },
-            dataType: 'json',
-            success: function(response) {
-                if (response.length > 0) {
-                    $.each(response, function(index, state) {
-                        var option = $('<option>', {
-                            value: state.id,
-                            text: state.name
-                        });
-                        if (state.id == selectbilledState) {
-                            option.prop('selected', true);
-                        }
-                        $statebillDropdown.append(option);
-                    });
-                } else {
-                    $statebillDropdown.append('<option value="">No states found</option>');
-                }
-            },
-            error: function() {
-                alert('Error loading states.');
+      $.ajax({
+         url: "{{ route('states.get') }}",
+         type: 'GET',
+         data: {
+            bill_country_id: countrybillId
+         },
+         dataType: 'json',
+         success: function(response) {
+            if (response.length > 0) {
+               $.each(response, function(index, state) {
+                  var option = $('<option>', {
+                     value: state.id,
+                     text: state.name
+                  });
+                  if (state.id == selectbilledState) {
+                     option.prop('selected', true);
+                  }
+                  $statebillDropdown.append(option);
+               });
+            } else {
+               $statebillDropdown.append('<option value="">No states found</option>');
             }
-        });
-    }
+         },
+         error: function() {
+            alert('Error loading states.');
+         }
+      });
+   }
 
-    $countrybillDropdown.on('change', function() {
-        loadbilStates($(this).val());
-    });
+   $countrybillDropdown.on('change', function() {
+      loadbilStates($(this).val());
+   });
 
-    var initialbillCountry = $countrybillDropdown.val();
-    if (initialbillCountry) {
-        loadbilStates(initialbillCountry, selectbilledState);
-    }
+   var initialbillCountry = $countrybillDropdown.val();
+   if (initialbillCountry) {
+      loadbilStates(initialbillCountry, selectbilledState);
+   }
 </script>
 <script>
    document.getElementById('ISBillingAddSameAsMailing').addEventListener('change', function() {
@@ -738,3 +749,82 @@
       }
    });
 </script>
+<script>
+$(document).ready(function() {
+
+    function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validateCurrentTab(tab) {
+        var valid = true;
+
+        tab.find('.required').each(function() {
+            if (!$(this).val().trim()) {
+                $(this).addClass('is-invalid');
+                valid = false;
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
+
+        tab.find('input[type="email"]').each(function() {
+            var email = $(this).val().trim();
+            if (email !== '' && !validateEmail(email)) {
+                if (!$(this).next('.error-msg').length) {
+                    $(this).after('<span class="error-msg" style="color:red;">Please enter a valid email.</span>');
+                }
+                valid = false;
+            } else {
+                $(this).next('.error-msg').remove();
+            }
+        });
+
+        return valid;
+    }
+
+    $('.nextBtn').on('click', function() {
+        var currentTab = $(this).closest('.tab-pane');
+
+        if (validateCurrentTab(currentTab)) {
+            var nextTab = currentTab.next('.tab-pane');
+            if (nextTab.length) {
+                var nextTabId = nextTab.attr('id');
+                $('a[href="#' + nextTabId + '"]').tab('show');
+            }
+        } else {
+            alert('Please fill all required filed before proceeding.');
+        }
+    });
+
+    $('a[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
+        var currentTab = $('.tab-pane.active');
+
+        var targetTab = $(this).attr('href');
+        var currentIndex = parseInt(currentTab.attr('id').replace('tab', ''), 10);
+        var targetIndex = parseInt(targetTab.replace('#tab', ''), 10);
+
+        if (targetIndex > currentIndex) {
+            if (!validateCurrentTab(currentTab)) {
+                e.preventDefault();
+                alert('Please fill all required filed before proceeding.');
+                currentTab.find('.required.is-invalid:first, input[type="email"].is-invalid:first').focus();
+            }
+        }
+    });
+
+    $('#secondary_email, #bill_mail').on('blur', function() {
+        var tab = $(this).closest('.tab-pane');
+        validateCurrentTab(tab);
+    });
+
+});
+</script>
+
+
+<style>
+   .is-invalid {
+      border-color: red !important;
+   }
+</style>

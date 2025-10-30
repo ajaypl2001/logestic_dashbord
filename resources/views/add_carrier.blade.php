@@ -9,43 +9,43 @@
          <div class="col-xl-12">
             <div class="card">
                <div class="card-header">
-                  <div class="d-flex flex-wrap justify-content-between gap-3"> 
+                  <div class="d-flex flex-wrap justify-content-between gap-3">
                      @if (!empty($carrier_data->id))
-                        <h4 class="card-title d-flex align-items-center gap-1" id="hidden_column"> Update Carrier </h4>
+                     <h4 class="card-title d-flex align-items-center gap-1" id="hidden_column"> Update Carrier </h4>
                      @else
-                        <h4 class="card-title d-flex align-items-center gap-1" id="hidden_column"> Add Carrier </h4>
-                     @endif 
-                  
-                  <a href="{{ route('external_carrier')}}" class="btn btn-primary btn-sm"><i class="bx bx-arrow-back me-1"></i>Back  </a>
-               </div>
+                     <h4 class="card-title d-flex align-items-center gap-1" id="hidden_column"> Add Carrier </h4>
+                     @endif
+
+                     <a href="{{ route('external_carrier')}}" class="btn btn-primary btn-sm"><i class="bx bx-arrow-back me-1"></i>Back </a>
+                  </div>
                </div>
                @php
-                  $isEdit = isset($carrier_data);
+               $isEdit = isset($carrier_data);
                @endphp
                <div class="card-body">
                   <div class="row">
                      <div class="col-lg-12">
-                       
-                        <form action="{{ $isEdit ? route('update_carrier_query', $carrier_data->id) : route('add_carrier_query') }}" id="CareerForm" method="post" >
+
+                        <form action="{{ $isEdit ? route('update_carrier_query', $carrier_data->id) : route('add_carrier_query') }}" id="CareerForm" method="post">
                            @csrf
                            <div class="row">
                               <div class="col-md-12">
-                                  <nav>
-                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                 <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                        <a class="nav-item nav-link active" id="tab01-tab" data-bs-toggle="tab" href="#tab01" role="tab">Account</a>
                                        <a class="nav-item nav-link" id="tab02-tab" data-bs-toggle="tab" href="#tab02" role="tab">Insurance</a>
                                        <a class="nav-item nav-link" id="tab03-tab" data-bs-toggle="tab" href="#tab03" role="tab">Accounting</a>
                                        <a class="nav-item nav-link" id="tab04-tab" data-bs-toggle="tab" href="#tab04" role="tab">Equipment</a>
                                        <a class="nav-item nav-link" id="tab05-tab" data-bs-toggle="tab" href="#tab05" role="tab">Notes</a>
-                                     </div>
-                                   </nav>
+                                    </div>
+                                 </nav>
                                  <div class="tab-content carrier_tabs pt-4" id="nav-tabContent">
                                     <div class="tab-pane fade show active" id="tab01" role="tabpanel">
                                        <div class="row">
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Carrier Name</label><span style="color:red;">*</span>
-                                                <input Placeholder="Carrier Name" class="form-control required" id="carrier_name" name="carrier_name" type="text" value="{{ $isEdit ? $carrier_data->carrier_name : '' }}" required/>
+                                                <input Placeholder="Carrier Name" class="form-control required" id="carrier_name" name="carrier_name" type="text" value="{{ $isEdit ? $carrier_data->carrier_name : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -53,7 +53,8 @@
                                                 <div class="col-md-4 el_small_fld">
                                                    <div class="form-group mb-3">
                                                       <label class="control-label mb-1">M.C. #/F.F. #</label><span style="color:red;">*</span>
-                                                      <select class="form-control shadow-none col-12" id="mc_ff" name="mc_ff" width="50px"required>
+                                                      <select class="form-control shadow-none col-12 required" id="mc_ff" name="mc_ff" width="50px" >
+                                                         <option value="">Select One</option>
                                                          <option value="MC" {{ $isEdit && $carrier_data->mc_ff == 'MC' ? 'selected' : '' }}>MC</option>
                                                          <option value="FF" {{ $isEdit && $carrier_data->mc_ff == 'FF' ? 'selected' : '' }}>FF</option>
                                                       </select>
@@ -71,13 +72,13 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">D.O.T.</label>
-                                                <input Placeholder="D.O.T." class="form-control" id="dot" name="dot" type="date" value="{{ $isEdit ? $carrier_data->dot : '' }}" />
+                                                <input Placeholder="D.O.T." class="form-control required" id="dot" name="dot" type="date" value="{{ $isEdit ? $carrier_data->dot : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Address</label><span style="color:red;">*</span>
-                                                <input Placeholder="Address" class="form-control required" id="address" name="address" type="text" value="{{ $isEdit ? $carrier_data->address : '' }}" required/>
+                                                <input Placeholder="Address" class="form-control required" id="address" name="address" type="text" value="{{ $isEdit ? $carrier_data->address : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -95,10 +96,10 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Country</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12 required" id="strCountryID" name="country" width="100px" required>
+                                                <select class="form-control shadow-none col-12 required" id="strCountryID" name="country" width="100px" >
                                                    <option value="">Please Select</option>
-                                                 @foreach($countries as $country)
-                                                   <option value="{{ $country->id }}" {{ $isEdit && $carrier_data->country == $country->id ? 'selected' : '' }}>{{ $country->countries_name }}
+                                                   @foreach($countries as $country)
+                                                   <option value="{{ $country->countries_iso_code }}" {{ $isEdit && $carrier_data->country == $country->countries_iso_code ? 'selected' : '' }}>{{ $country->countries_name }}
                                                    </option>
                                                    @endforeach
                                                 </select>
@@ -107,7 +108,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">State</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12 required"  id="strStateID" name="state" width="100px" required>
+                                                <select class="form-control shadow-none col-12 required" id="strStateID" name="state" width="100px" >
                                                    <option value="">Please Select</option>
                                                 </select>
                                              </div>
@@ -115,32 +116,32 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">City</label><span style="color:red;">*</span>
-                                                <input Placeholder="City" class="form-control required" id="city" name="city" type="text" value="{{ $isEdit ? $carrier_data->city : '' }}" required/>
+                                                <input Placeholder="City" class="form-control required" id="city" name="city" type="text" value="{{ $isEdit ? $carrier_data->city : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Zip</label><span style="color:red;">*</span>
-                                                <input Placeholder="Zip" class="form-control" id="zip_code" name="zip_code" type="text" value="{{ $isEdit ? $carrier_data->zip_code : '' }}" required/>
+                                                <input Placeholder="Zip" class="form-control required" id="zip_code" name="zip_code" type="text" value="{{ $isEdit ? $carrier_data->zip_code : '' }}" />
                                                 <span class="field-validation-valid" data-valmsg-for="ZipCode" data-valmsg-replace="true"></span>
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Contact Name</label>
-                                                <input Placeholder="Contact Name" class="form-control" id="contact_name" name="contact_name" type="text" value="{{ $isEdit ? $carrier_data->contact_name : '' }}" />
+                                                <input Placeholder="Contact Name" class="form-control required" id="contact_name" name="contact_name" type="text" value="{{ $isEdit ? $carrier_data->contact_name : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Email</label>
-                                                <input  Placeholder="Email" class="form-control" id="email" name="email" type="text" value="{{ $isEdit ? $carrier_data->email : '' }}" />
+                                                <input Placeholder="Email" class="form-control required" id="email" name="email" type="text" value="{{ $isEdit ? $carrier_data->email : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Telephone</label><span style="color:red;">*</span>
-                                                <input Placeholder="XXX-XXX-XXXX" class="form-control required telephone" id="telephone" name="telephone" type="text" value="{{ $isEdit ? $carrier_data->telephone : '' }}" required/>
+                                                <input Placeholder="XXX-XXX-XXXX" class="form-control telephone required" id="telephone" name="telephone" type="text" value="{{ $isEdit ? $carrier_data->telephone : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -164,7 +165,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Payment Terms</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12" id="payment_terms" name="payment_terms" width="100px" required>
+                                                <select class="form-control shadow-none col-12 required" id="payment_terms" name="payment_terms" width="100px" >
                                                    <option value="">Please Select</option>
                                                    <option value=".5/10 Net 30" {{ $isEdit && $carrier_data->payment_terms == '.5/10 Net 30' ? 'selected' : '' }}>.5/10 Net 30</option>
                                                    <option value="1.5/2 Net 30" {{ $isEdit && $carrier_data->payment_terms == '1.5/2 Net 30' ? 'selected' : '' }}>1.5/2 Net 30</option>
@@ -241,19 +242,19 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Tax ID #</label>
-                                                <input Placeholder="Tax ID #" class="form-control" id="tax_id" name="tax_id" type="text" value="{{ $isEdit ? $carrier_data->tax_id : '' }}" />
+                                                <input Placeholder="Tax ID #" class="form-control required" id="tax_id" name="tax_id" type="text" value="{{ $isEdit ? $carrier_data->tax_id : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Username </label>
-                                                <input Placeholder="Username" class="form-control" id="username" name="username" type="text" value="{{ $isEdit ? $carrier_data->username : '' }}" />
+                                                <input Placeholder="Username" class="form-control required" id="username" name="username" type="text" value="{{ $isEdit ? $carrier_data->username : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Password</label>
-                                                <input Placeholder="Password" class="form-control" id="password" name="password" type="password" value="{{ $isEdit ? $carrier_data->password : '' }}" />
+                                                <input Placeholder="Password" class="form-control required" id="password" name="password" type="password" value="{{ $isEdit ? $carrier_data->password : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3" style="display:none;">
@@ -265,7 +266,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Factoring Company</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12" id="factoring_company" name="factoring_company" required>
+                                                <select class="form-control shadow-none col-12" id="factoring_company" name="factoring_company" >
                                                    <option value="">Please Select</option>
                                                    <option value="No Factoring" {{ $isEdit && $carrier_data->factoring_company == 'No Factoring' ? 'selected' : '' }}>No Factoring</option>
                                                 </select>
@@ -274,13 +275,13 @@
                                           <div class="col-md-9">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Notes</label>
-                                                <textarea Placeholder="Notes" class="form-control textareaNotes1 el_textarea100" cols="20" id="notes" name="notes" rows="2">{{ $isEdit ? $carrier_data->notes : '' }}</textarea>
+                                                <textarea Placeholder="Notes" class="form-control textareaNotes1 el_textarea100" cols="20" id="notes" name="notes" rows="2" >{{ $isEdit ? $carrier_data->notes : '' }}</textarea>
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Status</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12" id="acc_sts" name="acc_sts" width="100px" required>
+                                                <select class="form-control shadow-none col-12 required" id="acc_sts" name="acc_sts" width="100px" >
                                                    <option value="">Please Select</option>
                                                    <option value="2" {{ $isEdit && $carrier_data->acc_sts == 2 ? 'selected' : '' }}>Inactive</option>
                                                    <option value="1" {{ $isEdit && $carrier_data->acc_sts == 1 ? 'selected' : '' }}>Active</option>
@@ -290,7 +291,7 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Load Type</label><span style="color:red;">*</span>
-                                                <select class="form-control shadow-none col-12" id="load_type" name="load_type" width="100px" required>
+                                                <select class="form-control shadow-none col-12 required" id="load_type" name="load_type" width="100px" >
                                                    <option value="">Please Select</option>
                                                    <option value="OTR" {{ $isEdit && $carrier_data->load_type == 'OTR' ? 'selected' : '' }}>OTR</option>
                                                    <option value="Dray-age" {{ $isEdit && $carrier_data->load_type == 'Dray-age' ? 'selected' : '' }}>Dray-age</option>
@@ -301,8 +302,8 @@
                                              <label class="control-label mb-1 el_min100">BlackListed</label>
                                              <div class="form-check-inline form-check">
                                                 <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="Yes" name="black_listed" {{ ($isEdit && $carrier_data->black_listed == 'Yes') ? 'checked' : '' }}/>
-                                                Carrier is blacklisted
+                                                   <input class="form-check-input" type="checkbox" value="Yes" name="black_listed" {{ ($isEdit && $carrier_data->black_listed == 'Yes') ? 'checked' : '' }} />
+                                                   Carrier is blacklisted
                                                 </label>
                                              </div>
                                           </div>
@@ -311,12 +312,15 @@
                                                 <label class="control-label mb-1 el_min100">Corporation</label>
                                                 <div class="form-check-inline form-check">
                                                    <label class="form-check-label">
-                                                   <input class="form-check-input" type="checkbox" value="Yes" name="corporation" {{ ($isEdit && $carrier_data->corporation == 'Yes') ? 'checked' : '' }}/>
-                                                   Carrier is a corporation
+                                                      <input class="form-check-input" type="checkbox" value="Yes" name="corporation" {{ ($isEdit && $carrier_data->corporation == 'Yes') ? 'checked' : '' }} />
+                                                      Carrier is a corporation
                                                    </label>
                                                 </div>
                                              </div>
                                           </div>
+                                       </div>
+                                       <div class="form_bbtns text-end">
+                                          <button type="button" class="btn btn-primary text-white commonBtn rounded px-3 nextBtn">Next</button>
                                        </div>
                                     </div>
                                     <div class="tab-pane fade" id="tab02" role="tabpanel">
@@ -325,43 +329,43 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Company</label>
-                                                <input Placeholder="Liability Company" class="form-control" id="lib_company" name="lib_company" type="text" value="{{ $isEdit ? $carrier_data->lib_company : '' }}" />
+                                                <input Placeholder="Liability Company" class="form-control required" id="lib_company" name="lib_company" type="text" value="{{ $isEdit ? $carrier_data->lib_company : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Policy # </label>
-                                                <input  Placeholder="Policy #" class="form-control" id="lib_policy_no" name="lib_policy_no" type="text" value="{{ $isEdit ? $carrier_data->lib_policy_no : '' }}" />
+                                                <input Placeholder="Policy #" class="form-control required" id="lib_policy_no" name="lib_policy_no" type="text" value="{{ $isEdit ? $carrier_data->lib_policy_no : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Expiry Date</label>
-                                                <input  Placeholder="MM/dd/yyyy" class="form-control datepicker" id="lib_exp_date" name="lib_exp_date" type="date" value="{{ $isEdit ? $carrier_data->lib_exp_date : '' }}" />
+                                                <input Placeholder="MM/dd/yyyy" class="form-control datepicker required" id="lib_exp_date" name="lib_exp_date" type="date" value="{{ $isEdit ? $carrier_data->lib_exp_date : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Telephone</label>
-                                                <input Placeholder="xxx-xxx-xxxx" class="form-control telephone" id="lib_telephone" name="lib_telephone" type="text" value="{{ $isEdit ? $carrier_data->lib_telephone : '' }}" />
+                                                <input Placeholder="xxx-xxx-xxxx" class="form-control telephone required" id="lib_telephone" name="lib_telephone" type="text" value="{{ $isEdit ? $carrier_data->lib_telephone : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Extn.</label>
-                                                <input  Placeholder="XXXXX" class="form-control" id="lib_extn" name="lib_extn" type="text" value="{{ $isEdit ? $carrier_data->lib_extn : '' }}" />
+                                                <input Placeholder="XXXXX" class="form-control required" id="lib_extn" name="lib_extn" type="text" value="{{ $isEdit ? $carrier_data->lib_extn : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Contact </label>
-                                                <input Placeholder="Contact" class="form-control" id="lib_contact" name="lib_contact" type="text" value="{{ $isEdit ? $carrier_data->lib_contact : '' }}" />
+                                                <input Placeholder="Contact" class="form-control required" id="lib_contact" name="lib_contact" type="text" value="{{ $isEdit ? $carrier_data->lib_contact : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Liablity</label>
-                                                <input  Placeholder="$0.00" class="form-control"  id="lib_liability" name="lib_liability" type="text" value="{{ $isEdit ? $carrier_data->lib_liability : '' }}" />
+                                                <input Placeholder="$0.00" class="form-control required" id="lib_liability" name="lib_liability" type="text" value="{{ $isEdit ? $carrier_data->lib_liability : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -370,19 +374,19 @@
                                                 <textarea Placeholder="Notes" class="form-control" cols="20" id="lib_notes" name="lib_notes" rows="4">{{ $isEdit ? $carrier_data->lib_notes : '' }}</textarea>
                                              </div>
                                           </div>
-                                       <h4 class="el_form_headding bg-light">Auto Insurance Company</h4>
-                                       <div class="form-check-inline form-check mt-2">
-                                          <div class="form-group mb-3">
-                                             <label class="form-check-label">
-                                             <input class="form-check-input" type="checkbox" name="ins_com_same_lib" value="Yes" {{ ($isEdit && $carrier_data->ins_com_same_lib == 'Yes') ? 'checked' : '' }}/>
-                                             Is Same As Liability
-                                             </label>
+                                          <h4 class="el_form_headding bg-light">Auto Insurance Company</h4>
+                                          <div class="form-check-inline form-check mt-2">
+                                             <div class="form-group mb-3">
+                                                <label class="form-check-label">
+                                                   <input class="form-check-input" type="checkbox" name="ins_com_same_lib" value="Yes" {{ ($isEdit && $carrier_data->ins_com_same_lib == 'Yes') ? 'checked' : '' }} />
+                                                   Is Same As Liability
+                                                </label>
+                                             </div>
                                           </div>
-                                       </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Company</label>
-                                                <input  Placeholder="Auto Insurance Company" class="form-control" id="ins_company" name="ins_company" type="text" value="{{ $isEdit ? $carrier_data->ins_company : '' }}" />
+                                                <input Placeholder="Auto Insurance Company" class="form-control" id="ins_company" name="ins_company" type="text" value="{{ $isEdit ? $carrier_data->ins_company : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -400,19 +404,19 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Telephone</label>
-                                                <input  Placeholder="xxx-xxx-xxxx" class="form-control telephone" id="ins_telephone" name="ins_telephone" type="text" value="{{ $isEdit ? $carrier_data->ins_telephone : '' }}" />
+                                                <input Placeholder="xxx-xxx-xxxx" class="form-control telephone" id="ins_telephone" name="ins_telephone" type="text" value="{{ $isEdit ? $carrier_data->ins_telephone : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Extn.</label>
-                                                <input  Placeholder="xxxxx" class="form-control" id="ins_extn" name="ins_extn" type="text" value="{{ $isEdit ? $carrier_data->ins_extn : '' }}" />
+                                                <input Placeholder="xxxxx" class="form-control" id="ins_extn" name="ins_extn" type="text" value="{{ $isEdit ? $carrier_data->ins_extn : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Contact </label>
-                                                <input  Placeholder="Contact" class="form-control" id="ins_contact" name="ins_contact" type="text" value="{{ $isEdit ? $carrier_data->ins_contact : '' }}" />
+                                                <input Placeholder="Contact" class="form-control" id="ins_contact" name="ins_contact" type="text" value="{{ $isEdit ? $carrier_data->ins_contact : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -427,16 +431,16 @@
                                                 <textarea Maxlength="200" Placeholder="Notes" class="form-control" cols="20" id="ins_notes" name="ins_notes" rows="4">{{ $isEdit ? $carrier_data->ins_notes : '' }}</textarea>
                                              </div>
                                           </div>
-                                 
-                                       <h4 class="el_form_headding bg-light">Cargo Company</h4>
-                                       <div class="form-check-inline form-check mt-2">
-                                          <div class="form-group mb-3">
-                                             <label class="form-check-label">
-                                             <input class="form-check-input" id="cargo_com_same_lib" name="cargo_com_same_lib" type="checkbox" value="Yes" {{ ($isEdit && $carrier_data->cargo_com_same_lib == 'Yes') ? 'checked' : '' }}/>
-                                             Is Same As Liability
-                                             </label>
+
+                                          <h4 class="el_form_headding bg-light">Cargo Company</h4>
+                                          <div class="form-check-inline form-check mt-2">
+                                             <div class="form-group mb-3">
+                                                <label class="form-check-label">
+                                                   <input class="form-check-input" id="cargo_com_same_lib" name="cargo_com_same_lib" type="checkbox" value="Yes" {{ ($isEdit && $carrier_data->cargo_com_same_lib == 'Yes') ? 'checked' : '' }} />
+                                                   Is Same As Liability
+                                                </label>
+                                             </div>
                                           </div>
-                                       </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Company</label>
@@ -506,43 +510,43 @@
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">FMCSA Insurance Company</label>
-                                                <input  Placeholder="FMCSA Insurance Company" class="form-control" id="fmcsa_ins_com" name="fmcsa_ins_com" type="text" value="{{ $isEdit ? $carrier_data->fmcsa_ins_com : '' }}" />
+                                                <input Placeholder="FMCSA Insurance Company" class="form-control required" id="fmcsa_ins_com" name="fmcsa_ins_com" type="text" value="{{ $isEdit ? $carrier_data->fmcsa_ins_com : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Policy # </label>
-                                                <input Placeholder="Policy #" class="form-control" id="wsib_policy_no" name="wsib_policy_no" type="text" value="{{ $isEdit ? $carrier_data->wsib_policy_no : '' }}" />
+                                                <input Placeholder="Policy #" class="form-control required" id="wsib_policy_no" name="wsib_policy_no" type="text" value="{{ $isEdit ? $carrier_data->wsib_policy_no : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Expiry Date</label>
-                                                <input  Placeholder="mm/dd/yyyy" class="form-control datepicker" id="wsib_exp_date" name="wsib_exp_date" type="date" value="{{ $isEdit ? $carrier_data->wsib_exp_date : '' }}" />
+                                                <input Placeholder="mm/dd/yyyy" class="form-control datepicker required" id="wsib_exp_date" name="wsib_exp_date" type="date" value="{{ $isEdit ? $carrier_data->wsib_exp_date : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Type</label>
-                                                <input Maxlength="100" Placeholder="Type" class="form-control" id="wsib_type" name="wsib_type" type="text" value="{{ $isEdit ? $carrier_data->wsib_type : '' }}" />
+                                                <input Maxlength="100" Placeholder="Type" class="form-control required" id="wsib_type" name="wsib_type" type="text" value="{{ $isEdit ? $carrier_data->wsib_type : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Coverage ($)</label>
-                                                <input Placeholder="0.00" class="form-control" id="wsib_coverage" name="wsib_coverage" type="text" value="{{ $isEdit ? $carrier_data->wsib_coverage : '' }}" />
+                                                <input Placeholder="0.00" class="form-control required" id="wsib_coverage" name="wsib_coverage" type="text" value="{{ $isEdit ? $carrier_data->wsib_coverage : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Telephone </label>
-                                                <input Placeholder="xxx-xxx-xxxx" class="form-control telephone" id="wsib_telephone" name="wsib_telephone" type="text" value="{{ $isEdit ? $carrier_data->wsib_telephone : '' }}" />
+                                                <input Placeholder="xxx-xxx-xxxx" class="form-control telephone required" id="wsib_telephone" name="wsib_telephone" type="text" value="{{ $isEdit ? $carrier_data->wsib_telephone : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">A.M. Best Rating</label>
-                                                <input Placeholder="A.M. Best Rating" class="form-control" id="best_rating" name="best_rating" type="text" value="0" />
+                                                <input Placeholder="A.M. Best Rating" class="form-control required" id="best_rating" name="best_rating" type="text" value="0" />
                                              </div>
                                           </div>
                                           <div class="col-md-3">
@@ -550,25 +554,28 @@
                                              </div>
                                           </div>
                                        </div>
+                                       <div class="form_bbtns text-end">
+                                          <button type="button" class="btn btn-primary text-white commonBtn rounded px-3 nextBtn">Next</button>
+                                       </div>
                                     </div>
-                                      <div class="tab-pane fade" id="tab03" role="tabpanel">
+                                    <div class="tab-pane fade" id="tab03" role="tabpanel">
                                        <div class="row">
                                           <div class="col-md-4">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Primary Name</label>
-                                                <input Maxlength="100" Placeholder="Primary Name" class="form-control" id="primary_name" name="primary_name" type="text" value="{{ $isEdit ? $carrier_data->primary_name : '' }}" />
+                                                <input Maxlength="100" Placeholder="Primary Name" class="form-control required" id="primary_name" name="primary_name" type="text" value="{{ $isEdit ? $carrier_data->primary_name : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-4">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Primary Telephone </label>
-                                                <input Placeholder="xxx-xxx-xxxx" class="form-control telephone" id="primary_telephone" name="primary_telephone" type="text" value="{{ $isEdit ? $carrier_data->primary_telephone : '' }}" />
+                                                <input Placeholder="xxx-xxx-xxxx" class="form-control telephone required" id="primary_telephone" name="primary_telephone" type="text" value="{{ $isEdit ? $carrier_data->primary_telephone : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-4">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Primary Email</label>
-                                                <input Placeholder="test@test.com" class="form-control" id="primary_email" name="primary_email" type="text" value="{{ $isEdit ? $carrier_data->primary_email : '' }}" />
+                                                <input Placeholder="test@test.com" class="form-control required" id="primary_email" name="primary_email" type="text" value="{{ $isEdit ? $carrier_data->primary_email : '' }}" />
                                              </div>
                                           </div>
                                        </div>
@@ -576,7 +583,7 @@
                                           <div class="col-md-4">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Secondary Name</label>
-                                                <input Placeholder="Secondary Name" class="form-control" id="sec_name" name="sec_name" type="text" value="{{ $isEdit ? $carrier_data->sec_name : '' }}" />
+                                                <input Placeholder="Secondary Name" class="form-control " id="sec_name" name="sec_name" type="text" value="{{ $isEdit ? $carrier_data->sec_name : '' }}" />
                                              </div>
                                           </div>
                                           <div class="col-md-4">
@@ -592,13 +599,16 @@
                                              </div>
                                           </div>
                                        </div>
+                                       <div class="form_bbtns text-end">
+                                          <button type="button" class="btn btn-primary text-white commonBtn rounded px-3 nextBtn">Next</button>
+                                       </div>
                                     </div>
-                                   <div class="tab-pane fade" id="tab04" role="tabpanel">
+                                    <div class="tab-pane fade" id="tab04" role="tabpanel">
                                        <div class="row">
                                           <div class="col-md-4">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Size of Fleet</label>
-                                                <input  Placeholder="" class="form-control" id="size_of_fleet" name="size_of_fleet" rows="10" type="text" value="0" readonly/>
+                                                <input Placeholder="" class="form-control" id="size_of_fleet" name="size_of_fleet" rows="10" type="text" value="0" readonly />
                                              </div>
                                           </div>
                                           <div class="col-md-4">
@@ -611,7 +621,7 @@
                                           </div>
                                        </div>
                                        <div class="el_tablescroll">
-                                          <table class="el_qttable table table-bordered" id="tbEquipmenttype" >
+                                          <table class="el_qttable table table-bordered" id="tbEquipmenttype">
                                              <thead>
                                                 <tr>
                                                    <th align="center" width="50">Yes</th>
@@ -620,54 +630,59 @@
                                                 </tr>
                                              </thead>
                                              <tbody>
-                                           
-                                          @foreach ($CarrierFleetType as $CarrierFleetTypes)
-                                            @php
+
+                                                @foreach ($CarrierFleetType as $CarrierFleetTypes)
+                                                @php
                                                 $fleetDetail = $CarrierFleetDetails->firstWhere('equipment_name', $CarrierFleetTypes->fleet_name);
                                                 $isChecked = $fleetDetail && $fleetDetail->is_checked === 'Yes';
                                                 $quantity = $fleetDetail ? $fleetDetail->quantity : 0;
-                                             @endphp
+                                                @endphp
                                                 <tr>
                                                    <td align="center">
                                                       <label class="form-check-label form-check-inline form-check">
-                                                      <input class="form-check-input" name="is_checked[]" type="checkbox" value="Yes" {{ $isChecked ? 'checked' : '' }} />
+                                                         <input class="form-check-input" name="is_checked[]" type="checkbox" value="Yes" {{ $isChecked ? 'checked' : '' }} />
                                                       </label>
-                                                      </td>
+                                                   </td>
                                                    <td>
                                                       <input class="form-control qty" maxlength="2" name="quantity[]" type="number" value="{{ $quantity }}" />
                                                       <input class="form-control " name="equipment_name[]" type="hidden" value="{{ $CarrierFleetTypes->fleet_name}}" />
                                                    </td>
                                                    <td>{{ $CarrierFleetTypes->fleet_name}}</td>
                                                 </tr>
-                                                
-                                          @endforeach
-                                          
+
+                                                @endforeach
+
                                              </tbody>
                                           </table>
                                        </div>
+                                       <div class="form_bbtns text-end">
+                                          <button type="button" class="btn btn-primary text-white commonBtn rounded px-3 nextBtn">Next</button>
+                                       </div>
                                     </div>
-                                     <div class="tab-pane fade" id="tab05" role="tabpanel">
+                                    <div class="tab-pane fade" id="tab05" role="tabpanel">
                                        <div class="row">
                                           <div class="col-md-12">
                                              <div class="form-group mb-3">
                                                 <label class="control-label mb-1">Notes</label>
-                                                <textarea Maxlength="4000" Placeholder="" class="form-control textareaNotes2" cols="20" id="main_notes" name="main_notes" rows="10">{{ $isEdit ? $carrier_data->main_notes : '' }}</textarea>
+                                                <textarea Maxlength="4000" Placeholder="" class="form-control textareaNotes2 required" cols="20" id="main_notes" name="main_notes" rows="10" >{{ $isEdit ? $carrier_data->main_notes : '' }}</textarea>
                                                 <span class="field-validation-valid" data-valmsg-for="Notes" data-valmsg-replace="true"></span>
                                              </div>
                                           </div>
                                        </div>
+                                       <div class="form_bbtns text-end">
+                                          <input type="hidden" name="carrier_id" value="{{ $isEdit ? $carrier_data->id : '' }}">
+                                          @if (!empty($carrier_data->id))
+                                          <button id="btnSubmit" type="submit" class="btn btn-success commonBtn">Update</button>
+                                          @else
+                                          <button id="btnSubmit" type="submit" class="btn btn-success commonBtn">Submit</button>
+                                          @endif
+
+                                          <a class="btn btn-primary  text-white commonBtn rounded submit px-3" href="{{ route('external_carrier')}}" style="">Cancel</a>
+                                       </div>
                                     </div>
+
                                  </div>
-                                 <div class="form_bbtns text-end">
-                                    <input type="hidden" name="carrier_id" value="{{ $isEdit ? $carrier_data->id : '' }}">
-                                    @if (!empty($carrier_data->id))
-                                       <button id="btnSubmit" type="submit" class="btn btn-success commonBtn">Update</button>
-                                    @else
-                                       <button id="btnSubmit" type="submit" class="btn btn-success commonBtn">Submit</button>
-                                    @endif 
-                                    
-                                    <a class="btn btn-primary  text-white commonBtn rounded submit px-3" href="{{ route('external_carrier')}}" style="">Cancel</a>
-                                 </div>
+
                               </div>
                            </div>
                         </form>
@@ -683,12 +698,12 @@
 <!-- End Container Fluid -->
 @include('footer')
 
-   <script>
-document.addEventListener('DOMContentLoaded', function() {
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
 
-    const insCheckbox = document.querySelector('input[name="ins_com_same_lib"]');
-    insCheckbox.addEventListener('change', function() {
-        if (this.checked) {
+      const insCheckbox = document.querySelector('input[name="ins_com_same_lib"]');
+      insCheckbox.addEventListener('change', function() {
+         if (this.checked) {
             document.getElementById('ins_company').value = document.getElementById('lib_company').value;
             document.getElementById('ins_policy_no').value = document.getElementById('lib_policy_no').value;
             document.getElementById('ins_exp_date').value = document.getElementById('lib_exp_date').value;
@@ -697,20 +712,20 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('ins_contact').value = document.getElementById('lib_contact').value;
             document.getElementById('ins_liability').value = document.getElementById('lib_liability').value;
             document.getElementById('ins_notes').value = document.getElementById('lib_notes').value;
-            
-            ['ins_company','ins_policy_no','ins_exp_date','ins_telephone','ins_extn','ins_contact','ins_liability','ins_notes'].forEach(id => {
-                document.getElementById(id).disabled = true;
-            });
-        } else {
-            ['ins_company','ins_policy_no','ins_exp_date','ins_telephone','ins_extn','ins_contact','ins_liability','ins_notes'].forEach(id => {
-                document.getElementById(id).disabled = false;
-            });
-        }
-    });
 
-    const cargoCheckbox = document.getElementById('cargo_com_same_lib');
-    cargoCheckbox.addEventListener('change', function() {
-        if (this.checked) {
+            ['ins_company', 'ins_policy_no', 'ins_exp_date', 'ins_telephone', 'ins_extn', 'ins_contact', 'ins_liability', 'ins_notes'].forEach(id => {
+               document.getElementById(id).disabled = true;
+            });
+         } else {
+            ['ins_company', 'ins_policy_no', 'ins_exp_date', 'ins_telephone', 'ins_extn', 'ins_contact', 'ins_liability', 'ins_notes'].forEach(id => {
+               document.getElementById(id).disabled = false;
+            });
+         }
+      });
+
+      const cargoCheckbox = document.getElementById('cargo_com_same_lib');
+      cargoCheckbox.addEventListener('change', function() {
+         if (this.checked) {
             document.getElementById('cargo_ompany').value = document.getElementById('lib_company').value;
             document.getElementById('cargo_policy_no').value = document.getElementById('lib_policy_no').value;
             document.getElementById('cargo_exp_date').value = document.getElementById('lib_exp_date').value;
@@ -720,129 +735,220 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('cargo_liability').value = document.getElementById('lib_liability').value;
             document.getElementById('cargo_notes').value = document.getElementById('lib_notes').value;
 
-            ['cargo_ompany','cargo_policy_no','cargo_exp_date','cargo_telephone','cargo_extn','cargo_contact','cargo_liability','cargo_notes'].forEach(id => {
-                document.getElementById(id).disabled = true;
+            ['cargo_ompany', 'cargo_policy_no', 'cargo_exp_date', 'cargo_telephone', 'cargo_extn', 'cargo_contact', 'cargo_liability', 'cargo_notes'].forEach(id => {
+               document.getElementById(id).disabled = true;
             });
-        } else {
-            ['cargo_ompany','cargo_policy_no','cargo_exp_date','cargo_telephone','cargo_extn','cargo_contact','cargo_liability','cargo_notes'].forEach(id => {
-                document.getElementById(id).disabled = false;
+         } else {
+            ['cargo_ompany', 'cargo_policy_no', 'cargo_exp_date', 'cargo_telephone', 'cargo_extn', 'cargo_contact', 'cargo_liability', 'cargo_notes'].forEach(id => {
+               document.getElementById(id).disabled = false;
             });
-        }
-    });
+         }
+      });
 
-});
+   });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+   document.addEventListener('DOMContentLoaded', function() {
 
-    function copyFields(sourceIds, targetIds) {
-        sourceIds.forEach((id, index) => {
+      function copyFields(sourceIds, targetIds) {
+         sourceIds.forEach((id, index) => {
             document.getElementById(targetIds[index]).value = document.getElementById(id).value;
-        });
-    }
+         });
+      }
 
-    const liabilityFields = ['lib_company','lib_policy_no','lib_exp_date','lib_telephone','lib_extn','lib_contact','lib_liability','lib_notes'];
-    const autoFields = ['ins_company','ins_policy_no','ins_exp_date','ins_telephone','ins_extn','ins_contact','ins_liability','ins_notes'];
-    const cargoFields = ['cargo_ompany','cargo_policy_no','cargo_exp_date','cargo_telephone','cargo_extn','cargo_contact','cargo_liability','cargo_notes'];
+      const liabilityFields = ['lib_company', 'lib_policy_no', 'lib_exp_date', 'lib_telephone', 'lib_extn', 'lib_contact', 'lib_liability', 'lib_notes'];
+      const autoFields = ['ins_company', 'ins_policy_no', 'ins_exp_date', 'ins_telephone', 'ins_extn', 'ins_contact', 'ins_liability', 'ins_notes'];
+      const cargoFields = ['cargo_ompany', 'cargo_policy_no', 'cargo_exp_date', 'cargo_telephone', 'cargo_extn', 'cargo_contact', 'cargo_liability', 'cargo_notes'];
 
-    const insCheckbox = document.querySelector('input[name="ins_com_same_lib"]');
-    insCheckbox.addEventListener('change', function() {
-        if (this.checked) {
+      const insCheckbox = document.querySelector('input[name="ins_com_same_lib"]');
+      insCheckbox.addEventListener('change', function() {
+         if (this.checked) {
             copyFields(liabilityFields, autoFields);
             autoFields.forEach(id => document.getElementById(id).disabled = true);
-        } else {
+         } else {
             autoFields.forEach(id => document.getElementById(id).disabled = false);
-        }
-    });
+         }
+      });
 
-    const cargoCheckbox = document.getElementById('cargo_com_same_lib');
-    cargoCheckbox.addEventListener('change', function() {
-        if (this.checked) {
+      const cargoCheckbox = document.getElementById('cargo_com_same_lib');
+      cargoCheckbox.addEventListener('change', function() {
+         if (this.checked) {
             copyFields(liabilityFields, cargoFields);
             cargoFields.forEach(id => document.getElementById(id).disabled = true);
-        } else {
+         } else {
             cargoFields.forEach(id => document.getElementById(id).disabled = false);
-        }
-    });
+         }
+      });
 
-    liabilityFields.forEach((id, index) => {
-        document.getElementById(id).addEventListener('input', function() {
+      liabilityFields.forEach((id, index) => {
+         document.getElementById(id).addEventListener('input', function() {
             if (insCheckbox.checked) {
-                document.getElementById(autoFields[index]).value = this.value;
+               document.getElementById(autoFields[index]).value = this.value;
             }
             if (cargoCheckbox.checked) {
-                document.getElementById(cargoFields[index]).value = this.value;
+               document.getElementById(cargoFields[index]).value = this.value;
             }
-        });
-    });
+         });
+      });
 
-});
+   });
+</script>
+
+<script>
+   $(document).ready(function() {
+      var $countryDropdown = $('#strCountryID');
+      var $stateDropdown = $('#strStateID');
+      var selectedState = "{{ $isEdit ? $carrier_data->state : '' }}";
+
+      function loadStates(countryId, selectedState = '') {
+         $stateDropdown.html('<option value="">Please Select</option>');
+         if (!countryId) return;
+
+         $.ajax({
+            url: "{{ route('states.get') }}",
+            type: 'GET',
+            data: {
+               country_id: countryId
+            },
+            dataType: 'json',
+            success: function(response) {
+               if (response.length > 0) {
+                  $.each(response, function(index, state) {
+                     var option = $('<option>', {
+                        value: state.id,
+                        text: state.name
+                     });
+                     if (state.id == selectedState) {
+                        option.prop('selected', true);
+                     }
+                     $stateDropdown.append(option);
+                  });
+               } else {
+                  $stateDropdown.append('<option value="">No states found</option>');
+               }
+            },
+            error: function() {
+               alert('Error loading states.');
+            }
+         });
+      }
+
+      $countryDropdown.on('change', function() {
+         loadStates($(this).val());
+      });
+
+      var initialCountry = $countryDropdown.val();
+      if (initialCountry) {
+         loadStates(initialCountry, selectedState);
+      }
+   });
+</script>
+
+<script>
+   function updateTotalQuantity() {
+      let total = 0;
+      $('.qty').each(function() {
+         let val = parseInt($(this).val()) || 0;
+         total += val;
+      });
+      $('#size_of_fleet').val(total);
+   }
+
+   $(document).ready(function() {
+      updateTotalQuantity();
+   });
+
+   $(document).on('input', '.qty', function() {
+      updateTotalQuantity();
+   });
+</script>
+
+
+<script>
+   $(document).ready(function() {
+      $('.nextBtn').on('click', function() {
+         var currentTab = $(this).closest('.tab-pane');
+         var valid = true;
+
+         currentTab.find('.required').each(function() {
+            if (!$(this).val()) {
+               $(this).addClass('is-invalid');
+               valid = false;
+            } else {
+               $(this).removeClass('is-invalid');
+            }
+         });
+
+         if (valid) {
+            var nextTab = currentTab.next('.tab-pane');
+            var nextTabId = nextTab.attr('id');
+            $('a[href="#' + nextTabId + '"]').tab('show');
+         }
+      });
+      $('#CareerForm input, #CareerForm select').on('input change', function() {
+         checkAllFields();
+      });
+
+      function checkAllFields() {
+         var allFilled = true;
+         $('#CareerForm .required').each(function() {
+            if (!$(this).val()) {
+               allFilled = false;
+            }
+         });
+
+         // if (allFilled) {
+         //    $('.nextBtn').hide();
+         //    if ($('.submitBtn').length === 0) {
+         //       $('.tab-pane').each(function() {
+         //          if (!$(this).find('button[type="submit"]').length) {
+         //             $(this).append('<div class="form_bbtns text-end"> <button type="submit" class="btn btn-primary text-white commonBtn rounded px-3">Save</button> </div>');
+         //          }
+         //       });
+         //    }
+         // }
+      }
+   });
 </script>
 
 <script>
 $(document).ready(function() {
-    var $countryDropdown = $('#strCountryID');
-    var $stateDropdown = $('#strStateID');
-    var selectedState = "{{ $isEdit ? $carrier_data->state : '' }}"; 
 
-    function loadStates(countryId, selectedState = '') {
-        $stateDropdown.html('<option value="">Please Select</option>');
-        if (!countryId) return;
+    $('a[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
+        var targetTab = $(this).attr('href'); 
+        var currentTabId = $('.tab-pane.active').attr('id'); 
 
-        $.ajax({
-            url: "{{ route('states.get') }}",
-            type: 'GET',
-            data: { country_id: countryId },
-            dataType: 'json',
-            success: function(response) {
-                if (response.length > 0) {
-                    $.each(response, function(index, state) {
-                        var option = $('<option>', {
-                            value: state.id,
-                            text: state.name
-                        });
-                        if (state.id == selectedState) {
-                            option.prop('selected', true);
-                        }
-                        $stateDropdown.append(option);
-                    });
+        var currentIndex = parseInt(currentTabId.replace('tab', ''), 10);
+        var targetIndex = parseInt(targetTab.replace('#tab', ''), 10);
+
+
+        if (targetIndex > currentIndex) {
+            var allFilled = true;
+
+    
+            $('#' + currentTabId + ' .required').each(function() {
+                if (!$(this).val().trim()) {
+                    allFilled = false;
+                    $(this).addClass('is-invalid');
                 } else {
-                    $stateDropdown.append('<option value="">No states found</option>');
+                    $(this).removeClass('is-invalid');
                 }
-            },
-            error: function() {
-                alert('Error loading states.');
+            });
+
+            if (!allFilled) {
+                e.preventDefault(); 
+                alert('Please fill all required fields before proceeding.');
+                $('#' + currentTabId + ' .required.is-invalid:first').focus();
             }
-        });
-    }
-
-    $countryDropdown.on('change', function() {
-        loadStates($(this).val());
+        }
+       
     });
 
-    var initialCountry = $countryDropdown.val();
-    if (initialCountry) {
-        loadStates(initialCountry, selectedState);
-    }
 });
-
 </script>
 
-<script>
-    function updateTotalQuantity() {
-        let total = 0;
-        $('.qty').each(function() {
-            let val = parseInt($(this).val()) || 0;
-            total += val;
-        });
-        $('#size_of_fleet').val(total);
-    }
-
-    $(document).ready(function() {
-        updateTotalQuantity();
-    });
-
-    $(document).on('input', '.qty', function() {
-        updateTotalQuantity();
-    });
-</script>
+<style>
+   .is-invalid {
+      border-color: red !important;
+   }
+</style>

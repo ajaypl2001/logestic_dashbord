@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ShipperDetail extends Model
 {
     protected $table = 'shipper_details'; 
+    
+    public $timestamps = true; 
 
     protected $fillable = [
         'creation_id',

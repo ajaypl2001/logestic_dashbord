@@ -10,12 +10,9 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('sign
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/', function () {
         return view('index');
     })->name('dashbord');
-
-    
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('customer')->controller(SqlActionController::class)->group(function () {

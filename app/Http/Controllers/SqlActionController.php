@@ -37,7 +37,7 @@ class SqlActionController extends Controller
     {
         $countries = Country::where('cou_sts', 'active')
             ->orderBy('countries_name', 'ASC')
-            ->get(['id', 'countries_name']);
+            ->get(['id', 'countries_name', 'countries_iso_code']);
 
         return view('add_shipper', compact('countries'));
     }
@@ -45,7 +45,7 @@ class SqlActionController extends Controller
 
     public function add_consignee_form()
     {
-        $countries = Country::where('cou_sts', 'active')->orderBy('countries_name', 'ASC')->get(['id', 'countries_name']);
+        $countries = Country::where('cou_sts', 'active')->orderBy('countries_name', 'ASC')->get(['id', 'countries_name', 'countries_iso_code']);
 
         return view('add_consignee', compact('countries'));
     }
@@ -55,7 +55,7 @@ class SqlActionController extends Controller
     {
         $countries = Country::where('cou_sts', 'active')
             ->orderBy('countries_name', 'ASC')
-            ->get(['id', 'countries_name']);
+            ->get(['id', 'countries_name', 'countries_iso_code']);
 
         return view('AddLoadCustomer', compact('countries'));
     }
@@ -82,8 +82,6 @@ class SqlActionController extends Controller
         $Customers = Customer::with('country')->orderBy('id', 'ASC')->get();
         return view('customer',  compact('Customers'));
     }
-
-
     //-------------- Add Shipper ---------------------
     public function add_shipper_query(Request $request)
     {
@@ -116,7 +114,7 @@ class SqlActionController extends Controller
 
         Shipper::create($data);
 
-        return redirect()->route('shipper-list')->with('success', 'Shipper added successfully!');
+        return redirect()->route('shipper-list')->with('success', 'Shipper added successfully.');
     }
 
     public function edit_shipper($id)
@@ -124,7 +122,7 @@ class SqlActionController extends Controller
         $decodedId = base64_decode($id);
         $countries = Country::where('cou_sts', 'active')
             ->orderBy('countries_name', 'ASC')
-            ->get(['id', 'countries_name']);
+            ->get(['id', 'countries_name', 'countries_iso_code']);
         $shipper = Shipper::findOrFail($decodedId);
         return view('add_shipper', compact('shipper', 'countries'));
     }
@@ -134,7 +132,7 @@ class SqlActionController extends Controller
         $decodedId = base64_decode($id);
         $countries = Country::where('cou_sts', 'active')
             ->orderBy('countries_name', 'ASC')
-            ->get(['id', 'countries_name']);
+            ->get(['id', 'countries_name', 'countries_iso_code']);
         $Consignees = Consignee::findOrFail($decodedId);
         return view('add_consignee', compact('Consignees', 'countries'));
     }
@@ -145,7 +143,7 @@ class SqlActionController extends Controller
         $decodedId = base64_decode($id);
         $countries = Country::where('cou_sts', 'active')
             ->orderBy('countries_name', 'ASC')
-            ->get(['id', 'countries_name']);
+            ->get(['id', 'countries_name', 'countries_iso_code']);
 
         $Customer = Customer::findOrFail($decodedId);
 
@@ -196,7 +194,7 @@ class SqlActionController extends Controller
     public function add_consignee_query(Request $request)
     {
         $data = [
-            'name' => $request->ShipperName,
+            'name' => $request->ConsignName,
             'addressl_1' => $request->AddressL1,
             'addressl_2' => $request->AddressL2,
             'addressl_3' => $request->AddressL3,
@@ -485,7 +483,7 @@ class SqlActionController extends Controller
         $CarrierFleetType = CarrierFleetType::get();
         $countries = Country::where('cou_sts', 'active')
             ->orderBy('countries_name', 'ASC')
-            ->get(['id', 'countries_name']);
+            ->get(['id', 'countries_name', 'countries_iso_code']);
         $CarrierFleetDetails = collect();
         return view('add_carrier', compact('CarrierFleetType', 'countries', 'CarrierFleetDetails'));
     }
@@ -592,7 +590,7 @@ class SqlActionController extends Controller
     {
         $decodedId = base64_decode($id);
 
-        $countries = Country::where('cou_sts', 'active')->orderBy('countries_name', 'ASC')->get(['id', 'countries_name']);
+        $countries = Country::where('cou_sts', 'active')->orderBy('countries_name', 'ASC')->get(['id', 'countries_name', 'countries_iso_code']);
 
         $carrier_data = Carrier::findOrFail($decodedId);
         $CarrierFleetType = CarrierFleetType::get();
@@ -709,7 +707,7 @@ class SqlActionController extends Controller
 
     public function add_load_creation()
     {
-        $countries = Country::where('cou_sts', 'active')->orderBy('countries_name', 'ASC')->get(['id', 'countries_name']);
+        $countries = Country::where('cou_sts', 'active')->orderBy('countries_name', 'ASC')->get(['id', 'countries_name','countries_iso_code']);
         $customers = Customer::all();
         $shippers = Shipper::all();
         $consignees = Consignee::all();
@@ -809,17 +807,29 @@ class SqlActionController extends Controller
     }
 
 
-    public function edit_load_creation($id){
-        
-        $decodedId = base64_decode($id);
-        $load = LoadCreation::with(['customer', 'shippers', 'consignees'])->findOrFail($decodedId);
+    public function edit_load_creation($id)
+    {
 
-        $countries = Country::where('cou_sts', 'active')->orderBy('countries_name', 'ASC')->get(['id', 'countries_name']);
+        $decodedId = base64_decode($id);
+        $load = LoadCreation::with(['customer', 'shippers', 'consignees', 'charges'])->findOrFail($decodedId);
+
+        $countries = Country::where('cou_sts', 'active')->orderBy('countries_name', 'ASC')->get(['id', 'countries_name', 'countries_iso_code']);
         $customers = Customer::all();
         $shippers = Shipper::all();
         $consignees = Consignee::all();
+        $chargesArray = $load->charges->map(function ($charge) {
+            return [
+                'type' => $charge->type,
+                'charge' => $charge->charge,
+                'amount' => $charge->amount,
+            ];
+        });
+    
+        $chargesJson = $chargesArray->toJson();
+        $totalAmount = $chargesArray->sum('amount');
 
-        return view('add_load_creation', compact('load', 'customers', 'countries', 'shippers', 'consignees'));
+
+        return view('add_load_creation', compact('load', 'customers', 'countries', 'shippers', 'consignees', 'chargesJson', 'totalAmount'));
     }
 
 

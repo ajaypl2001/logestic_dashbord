@@ -32,31 +32,31 @@
                               <div class="col-md-4">
                                  <div class="form-group mb-3">
                                     <label class="control-label mb-1">MC Number</label><span style="color:red">*</span>
-                                    <input Placeholder="MC Number" class="form-control required" id="mc_no" name="mc_no" type="text" value="{{ $isEdit ? $Mc_data->mc_no : '' }}" required />
+                                    <input Placeholder="MC Number" class="form-control required" id="mc_no" name="mc_no" type="text" value="{{ $isEdit ? $Mc_data->mc_no : '' }}"  />
                                  </div>
                               </div>
                               <div class="col-md-4">
                                  <div class="form-group mb-3">
                                     <label class="control-label mb-1">Carrier Name</label>
-                                    <input Maxlength="200" Placeholder="Carrier Name" class="form-control required" id="carrier_name" name="carrier_name" type="text" value="{{ $isEdit ? $Mc_data->carrier_name : '' }}" required />
+                                    <input Maxlength="200" Placeholder="Carrier Name" class="form-control required" id="carrier_name" name="carrier_name" type="text" value="{{ $isEdit ? $Mc_data->carrier_name : '' }}"  />
                                  </div>
                               </div>
                               <div class="col-md-4">
                                  <div class="form-group mb-3">
                                     <label class="control-label mb-1">Commodity Type</label>
-                                    <input Maxlength="200" Placeholder="Commodity Type" class="form-control required" id="commodity_type" name="commodity_type" type="text" value="{{ $isEdit ? $Mc_data->commodity_type : '' }}" required />
+                                    <input Maxlength="200" Placeholder="Commodity Type" class="form-control required" id="commodity_type" name="commodity_type" type="text" value="{{ $isEdit ? $Mc_data->commodity_type : '' }}" />
                                  </div>
                               </div>
                               <div class="col-md-4">
                                  <div class="form-group mb-3">
                                     <label class="control-label mb-1">Commodity Value</label>
-                                    <input Maxlength="100" Placeholder="Commodity Value" class="form-control required" id="commodity_value" name="commodity_value" type="text" value="{{ $isEdit ? $Mc_data->commodity_value : '' }}" required />
+                                    <input Maxlength="100" Placeholder="Commodity Value" class="form-control required" id="commodity_value" name="commodity_value" type="text" value="{{ $isEdit ? $Mc_data->commodity_value : '' }}" />
                                  </div>
                               </div>
                               <div class="col-md-4">
                                  <div class="form-group mb-3">
                                     <label class="control-label mb-1">Equipment Type</label>
-                                    <select class="form-control shadow-none col-12 required" id="equ_type" name="equ_type" width="100px" required>
+                                    <select class="form-control shadow-none col-12 required" id="equ_type" name="equ_type" width="100px" >
                                        <option value="">Please Select</option>
                                        <option value="Air Freight" {{ $isEdit && $Mc_data->equ_type == 'Air Freight' ? 'selected' : '' }}>Air Freight</option>
                                        <option value="Anhydros Ammonia" {{ $isEdit && $Mc_data->equ_type == 'Anhydros Ammonia' ? 'selected' : '' }}>Anhydros Ammonia</option>
@@ -98,3 +98,37 @@
 </div>
 <!-- End Container Fluid -->
 @include('footer')
+
+<script>
+$(document).ready(function() {
+    $('#MCCheckForm').on('submit', function(e) {
+        let valid = true;
+        $('.required').removeClass('is-invalid');
+
+        $(this).find('.required').each(function() {
+            if ($(this).val().trim() === '') {
+                $(this).addClass('is-invalid');
+                valid = false;
+            }
+        });
+
+        if (!valid) {
+            e.preventDefault(); 
+            alert('Please fill all fields.');
+            $('.is-invalid:first').focus();
+        }
+    });
+
+    $('.required').on('input', function() {
+        if ($(this).val().trim() !== '') {
+            $(this).removeClass('is-invalid');
+        }
+    });
+});
+</script>
+
+<style>
+   .is-invalid {
+      border-color: red !important;
+   }
+</style>

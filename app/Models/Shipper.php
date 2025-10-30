@@ -8,6 +8,8 @@ class Shipper extends Model
 {
     protected $table = 'shippers';
 
+    public $timestamps = true;
+    
     protected $fillable = [
         'name',
         'addressl_1',

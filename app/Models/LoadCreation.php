@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class LoadCreation extends Model
 {
     protected $table = 'load_creation';
+    
+    public $timestamps = true; 
 
     protected $fillable = [
         'customer_id',

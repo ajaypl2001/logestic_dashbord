@@ -8,6 +8,8 @@ class Charge extends Model
 {
     protected $table = 'charges';
 
+    public $timestamps = true; 
+
     protected $fillable = [
         'creation_id',
         'type',

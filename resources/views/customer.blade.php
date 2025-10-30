@@ -61,13 +61,13 @@
                                           <span class="badge bg-danger">Deactive</span>
                                        @endif
                            </td>
-                           <td>{{ $Customer->created_at->format('Y-m-d') }}</td>
+                           <td>{{ $Customer->created_at ? $Customer->created_at->format('Y-m-d') : 'N/A' }}</td>
                            <td>{{ $Customer->created_by }}</td>
                            <td>
                               <div class="d-flex gap-2">
-                                 <a href="" class="btn btn-light btn-sm">
+                                 <!-- <a href="" class="btn btn-light btn-sm">
                                     <iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon>
-                                 </a>
+                                 </a> -->
                                  <a href="{{ route('EditLoadCustomer', ['id'=>base64_encode($Customer->id)]) }}" class="btn btn-soft-primary btn-sm">
                                     <iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon>
                                  </a>

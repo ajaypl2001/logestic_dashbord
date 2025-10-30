@@ -8,6 +8,8 @@ class ConsigneeDetail extends Model
 {
     protected $primaryKey = 'consignee_id';
 
+    public $timestamps = true; 
+
     protected $fillable = [
         'creation_id',
         'consignee_id',

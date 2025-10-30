@@ -8,6 +8,8 @@ class State extends Model
 {
     protected $table = 'states';
 
+    public $timestamps = true;
+    
     protected $fillable = [
         'cou_id',
         'state',

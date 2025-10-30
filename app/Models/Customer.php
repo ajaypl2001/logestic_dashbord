@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
+
+    public $timestamps = true; 
+
     protected $fillable = [
         'customer_name', 'mc_ff', 'mc_ff_hidden', 'customer_id', 'address', 'address_line2', 'address_line3', 
         'country', 'state', 'city', 'zip_code', 'ISBillingAddSameAsMailing', 'bill_address', 'bill_address_line2', 

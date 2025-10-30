@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Consignee extends Model
 {
     protected $table = 'consignee';
+    
+    public $timestamps = true; 
 
     protected $fillable = [
         'name',

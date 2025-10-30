@@ -8,6 +8,8 @@ class Country extends Model
 {
     protected $table = 'countries';
 
+    public $timestamps = true; 
+
     protected $fillable = [
         'countries_name',
         'countries_iso_code',

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class CarrierFleetDetail extends Model
 {
     protected $table = 'carrier_fleet_details';
-
+    
+    public $timestamps = true;
 
     protected $fillable = [
         'carrier_id',
@@ -17,7 +18,6 @@ class CarrierFleetDetail extends Model
     ];
 
 
-    public $timestamps = true;
 
 
    

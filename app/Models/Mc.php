@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mc extends Model
 {
-     protected $table = 'mc';
+    protected $table = 'mc';
+
     protected $primaryKey = 'id';
-    public $timestamps = false; 
+
+    public $timestamps = true; 
 
     protected $fillable = [
         'mc_no',
